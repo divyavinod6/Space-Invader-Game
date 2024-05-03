@@ -6,5 +6,15 @@ int main(){
 
     InitWindow(windowWidth,windowHeight, "C++ Space Invaders");
 
+
+    SetTargetFPS(60); // speed of the game 
+    
+    while(WindowShouldClose()== false){
+
+        BeginDrawing();
+        EndDrawing();
+
+    }
+
     CloseWindow();
 }
