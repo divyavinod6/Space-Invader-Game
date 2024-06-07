@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "spaceship.hpp"
+#include "game.hpp"
 
 int main(){
 
@@ -11,14 +11,19 @@ int main(){
     SetTargetFPS(60); // speed of the game 
 
     // Spaceship Object Creation
-    Spaceship spaceship;
+
+    // Game Object Creation
+    Game game;
     
     while(WindowShouldClose()== false){
+
+        game.HandleInput();
 
         BeginDrawing();
         ClearBackground(grey);
         // draw new image for spaceships
-        spaceship.Draw();
+        game.Draw();
+
         EndDrawing();
 
     }
