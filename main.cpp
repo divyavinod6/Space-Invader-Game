@@ -1,6 +1,5 @@
 #include <raylib.h>
 #include "game.hpp"
-#include "laser.hpp"
 
 int main(){
 
@@ -15,7 +14,6 @@ int main(){
 
     // Game Object Creation
     Game game;
-    Laser laser = Laser({100,100},7);
     
     while(WindowShouldClose()== false){
 
@@ -25,8 +23,6 @@ int main(){
         ClearBackground(grey);
         // draw new image for spaceships
         game.Draw();
-        // draw laser
-        laser.Draw();
 
         EndDrawing();
 
