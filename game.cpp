@@ -43,6 +43,5 @@ void Game::Update() {
         laser.Update();
     }
     DeleteInacticeLaser(); 
-    std::cout<< "Vector Size" << spaceship.lasers.size() << std::endl;
     
 }
