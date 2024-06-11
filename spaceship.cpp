@@ -1,37 +1,43 @@
 #include "spaceship.hpp"
 
-Spaceship::Spaceship()
-{
+Spaceship::Spaceship() {
     image = LoadTexture("Graphics/spaceship.png");
-    position.x=(GetScreenWidth()-image.width )/2;
-    position.y=GetScreenHeight()-image.height;
+    position.x = (GetScreenWidth() - image.width) / 2;
+    position.y = GetScreenHeight() - image.height;
+    lastFireTime=0.0;
 }
 
-// destructer called automatically when game is closed
+// Destructor called automatically when game is closed
 // To release image in memory after the game is closed
-
-Spaceship::~Spaceship(){
+Spaceship::~Spaceship() {
     UnloadTexture(image);
 }
 
-void Spaceship::Draw(){
+void Spaceship::Draw() {
     DrawTextureV(image, position, WHITE);
-}
-void Spaceship::MoveLeft(){
-    position.x -=7;
-    // to prevent it from going outside boundary
-    if(position.x < 0){
-        position.x=0;
+    for (auto& laser : lasers) {
+        laser.Draw();
     }
 }
-void Spaceship::FireLaser()
-{
-    lasers.push_back(Laser({position.x + image.width/2 -2,position.y},-6));
+
+void Spaceship::MoveLeft() {
+    position.x -= 7;
+    // to prevent it from going outside boundary
+    if (position.x < 0) {
+        position.x = 0;
+    }
 }
-void Spaceship::MoveRight()
-{
-    position.x +=7;
-    if(position.x > GetScreenWidth() - image.width){
-        position.x= GetScreenWidth() - image.width;
+
+void Spaceship::MoveRight() {
+    position.x += 7;
+    if (position.x > GetScreenWidth() - image.width) {
+        position.x = GetScreenWidth() - image.width;
+    }
+}
+
+void Spaceship::FireLaser() {
+    if(GetTime()- lastFireTime >= 0.35){
+        lasers.push_back(Laser({position.x + image.width / 2 - 2, position.y}, -6));
+        lastFireTime=GetTime();
     }
 }

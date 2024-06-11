@@ -7,8 +7,8 @@ public:
     void Update();
     void Draw();
     bool active;
+    Vector2 position; // make position public
 
 private:
-    Vector2 position; 
     int speed; // how fast attribute moving on y axis
 };
