@@ -1,13 +1,15 @@
 #pragma once
+#include <raylib.h>
 #include <vector>
 #include "block.hpp"
 
-class Obstacle{
-    public:
-        Obstacle(Vector2 position);
-        void Draw();
-        Vector2 position;  
-        std::vector<Block> blocks;
-        std::vector<std::vector<int> grid; // obstacle is a 2D array(vector) overlapped on each one
-    private:
-}
+class Obstacle {
+public:
+    Obstacle(Vector2 position);
+    void Draw();
+    Vector2 position;
+    std::vector<Block> blocks;
+    static std::vector<std::vector<int>> grid; // 2D array (vector) for the obstacle shape
+
+private:
+};

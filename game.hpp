@@ -1,5 +1,6 @@
 #pragma once
 #include "spaceship.hpp"
+#include "obstacle.hpp"
 
 class Game {
 public:
@@ -11,5 +12,7 @@ public:
 
 private:
     Spaceship spaceship;
+    std::vector<Obstacle> CreateObstacles();
     void DeleteInacticeLaser();
+    std::vector<Obstacle> obstacles;
 };

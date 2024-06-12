@@ -14,7 +14,8 @@ int main(){
 
     // Game Object Creation
     Game game;
-    
+    Obstacle obstacle=Obstacle({100,100});
+     
     while(WindowShouldClose()== false){
 
         game.HandleInput();
