@@ -4,7 +4,7 @@
 class Alien{
     public:
         Alien(int type,Vector2 position);
-        void Update();
+        void Update(int direction); //  direction to control movement of aliens
         void Draw();
         int GetType();  // return type of alien
         static void UnloadImages(); // when game window is closed 

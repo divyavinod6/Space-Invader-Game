@@ -29,6 +29,13 @@ Alien::Alien(int type, Vector2 position)
 
 }
 
+void Alien::Update(int direction)
+{
+    // move x attribute of each alien
+    position.x +=direction;
+    
+
+}
 
 void Alien::Draw(){
     DrawTextureV(alienImages[type-1], position,WHITE); // draw image on position on screen
