@@ -7,6 +7,9 @@ Game::Game() {
     aliens= CreateAliens();
     aliensDirection=1;
     timeLastAlienFired = 0.0;
+
+    timeLastSpawn  = 0.0;
+    mysteryshipSpawnInterval = GetRandomValue(10,20);
 }
 
 Game::~Game() {
@@ -34,7 +37,10 @@ void Game::Draw() {
     // draw all alien lasers
     for(auto& laser:alienLasers){
         laser.Draw();
-    }
+    } 
+
+    // draw mysteryship that comes at random
+    mysteryship.Draw();
 
 
 }
@@ -133,6 +139,8 @@ void Game::AlienShootLaser()
 }
 
 void Game::Update() {
+
+    // check if mysteryship event has occured
     for (auto& laser : spaceship.lasers) {
         laser.Update();
     }
@@ -143,6 +151,7 @@ void Game::Update() {
         laser.Update();
     }
     DeleteInacticeLaser(); 
+    mysteryship.Update();
     
 }
 
