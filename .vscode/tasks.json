@@ -12,7 +12,8 @@
         "game.cpp",
         "laser.cpp",
         "obstacle.cpp",
-        "block.cpp", // Added block.cpp here
+        "block.cpp",
+        "alien.cpp",
         "-o",
         "${workspaceFolder}/main",
         "-lraylib",
@@ -37,7 +38,8 @@
         "game.cpp",
         "laser.cpp",
         "obstacle.cpp",
-        "block.cpp", // Added block.cpp here
+        "block.cpp",
+        "alein.cpp",
         "-o",
         "${workspaceFolder}/main",
         "-lraylib",

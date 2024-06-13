@@ -4,10 +4,12 @@
 Game::Game() {
     // Initialize spaceship or other game objects here
     obstacles = CreateObstacles();  // holds 4 obstacle objects
+    aliens= CreateAliens();
 }
 
 Game::~Game() {
     // Cleanup if needed
+    Alien::UnloadImages();
 }
 
 void Game::Draw() {
@@ -20,6 +22,11 @@ void Game::Draw() {
     // draw obstacles
     for(auto& obstacle:obstacles){
         obstacle.Draw();
+    }
+
+    // draw all aliens
+    for(auto& alien:aliens){
+        alien.Draw();
     }
 
 
@@ -48,6 +55,28 @@ void Game::DeleteInacticeLaser()
             ++it;
         }
     }
+}
+
+std::vector<Alien> Game::CreateAliens()
+{
+    std::vector<Alien> alien;  // 5 rows 11 column of alien, so creating a grid
+    for(int row=0;row<5;row++){
+        for(int column=0;column<11;column++){
+            int alienType;
+            if(row==0){
+                alienType=3;
+            }else if(row==1 || row==2){
+                alienType=2;
+            }else{
+                alienType=1;
+            }
+
+            float x=75+column*55; // cellSize hardcoded to 55, offset of 75
+            float y=110+ row*55;  //  offset of 110
+            aliens.push_back(Alien(alienType, {x,y}));  //  
+        }
+    }
+    return aliens;
 }
 
 void Game::Update() {

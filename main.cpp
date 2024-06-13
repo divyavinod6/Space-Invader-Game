@@ -15,6 +15,7 @@ int main(){
     // Game Object Creation
     Game game;
     Obstacle obstacle=Obstacle({100,100});
+
      
     while(WindowShouldClose()== false){
 
@@ -24,6 +25,7 @@ int main(){
         ClearBackground(grey);
         // draw new image for spaceships
         game.Draw();
+    
         EndDrawing();
 
     }
