@@ -11,6 +11,7 @@ class Alien{
         static Texture2D alienImages[3];  // common attribute containing all 3 images, loaded after Alien object is created
         int type;  // for 2 types of aliens 
         Vector2 position;
+        Rectangle getRect();
 
     private:
 };

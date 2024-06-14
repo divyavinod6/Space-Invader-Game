@@ -27,6 +27,18 @@ void MysteryShip::Spawn(){
     alive = true; 
 }
 
+Rectangle MysteryShip::getRect()
+
+{
+    // only collid when musteryship is visible
+    if(alive){
+        return {position.x,position.y,float(image.width),float(image.height)};
+    }
+    else{
+        return {position.x,position.y,0,0}; // if not alive send rectangle of size 0
+    }
+}
+
 void MysteryShip::Update(){
     if(alive){
         position.x += speed;

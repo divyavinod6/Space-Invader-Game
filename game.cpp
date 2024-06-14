@@ -7,9 +7,8 @@ Game::Game() {
     aliens= CreateAliens();
     aliensDirection=1;
     timeLastAlienFired = 0.0;
-
     timeLastSpawn  = 0.0;
-    mysteryshipSpawnInterval = GetRandomValue(10,20);
+    mysteryShipSpawnInterval = GetRandomValue(10,20);
 }
 
 Game::~Game() {
@@ -138,9 +137,103 @@ void Game::AlienShootLaser()
     }
 }
 
+void Game::CheckForCollisions()
+{
+    // Spaceship Laser
+
+    // loop through alien vector to check if they have collided with laser
+    for(auto& laser:spaceship.lasers){
+        auto it = aliens.begin();  // points to begin of iterator
+        while(it != aliens.end()){
+            if(CheckCollisionRecs(it -> getRect(), laser.getRect())){
+                // collision happened
+                it = aliens.erase(it); // removes alien and points to next 
+                laser.active = false;
+            }
+            else{
+                // no collision with current alien, move to next
+                ++it;
+            }
+        }
+
+        // loop through 4 obstacles to check collision with spaceship laser
+        for(auto& obstacle: obstacles){
+            auto it = obstacle.blocks.begin();
+            while(it != obstacle.blocks.end()){
+                if(CheckCollisionRecs(it -> getRect(), laser.getRect())){
+                    // remove block from vector and make laser inactive
+                    it = obstacle.blocks.erase(it);
+                    laser.active = false;
+                }
+                else{
+                    ++it;
+                }
+            }
+        }
+
+         // check collisions with mystery ship
+         if(CheckCollisionRecs(mysteryship.getRect(), laser.getRect())){
+            mysteryship.alive =false;
+            laser.active = false;
+         }
+    }
+
+    // Alien Lasers
+
+    for(auto& laser:alienLasers){
+        if(CheckCollisionRecs(laser.getRect(),spaceship.getRect())){
+            // deactivate laser and print on console to indicate life lost
+            laser.active = false;
+            std::cout<< "Spaceship Hit!!" <<std::endl;
+        }
+
+        // loop through 4 obstacles to check collision with alien  laser
+        for(auto& obstacle: obstacles){
+            auto it = obstacle.blocks.begin();
+            while(it != obstacle.blocks.end()){
+                if(CheckCollisionRecs(it -> getRect(), laser.getRect())){
+                    // remove block from vector and make laser inactive
+                    it = obstacle.blocks.erase(it);
+                    laser.active = false;
+                }
+                else{
+                    ++it;
+                }
+            }
+        }
+    }
+    // Alien collision with obstacle
+    for(auto& alien:aliens){
+        for(auto& obstacle: obstacles){
+            auto it=  obstacle.blocks.begin();
+            while(it != obstacle.blocks.end()){
+                if(CheckCollisionRecs(it-> getRect(), alien.getRect())){
+                    it = obstacle.blocks.erase(it);
+                }else{
+                    it++;
+                }
+            }
+        }
+        // if alien kills spaceship
+        if(CheckCollisionRecs(alien.getRect(), spaceship.getRect())){
+            std::cout << "Spaceship hit by Alien" <<std::endl;
+        }
+    }
+
+}
+
 void Game::Update() {
 
     // check if mysteryship event has occured
+    // call spawn method if interval has passed
+    double currentTime = GetTime();
+    if(currentTime -  timeLastSpawn > mysteryShipSpawnInterval){
+        mysteryship.Spawn();
+        timeLastSpawn = GetTime();
+        mysteryShipSpawnInterval = GetRandomValue(10,20);
+    }
+
+
     for (auto& laser : spaceship.lasers) {
         laser.Update();
     }
@@ -152,6 +245,7 @@ void Game::Update() {
     }
     DeleteInacticeLaser(); 
     mysteryship.Update();
+    CheckForCollisions();
     
 }
 

@@ -8,6 +8,7 @@ public:
     void Draw();
     bool active;
     Vector2 position; // make position public
+    Rectangle getRect();
 
 private:
     int speed; // how fast attribute moving on y axis

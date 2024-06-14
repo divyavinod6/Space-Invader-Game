@@ -28,4 +28,5 @@ private:
     MysteryShip mysteryship;
     float mysteryShipSpawnInterval;  // time at which mysteryship appears
     float timeLastSpawn; // time mysteryship was spawned
+    void CheckForCollisions();  
 };

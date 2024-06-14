@@ -12,6 +12,7 @@ public:
     void MoveRight();
     void MoveLeft();
     void FireLaser();
+    Rectangle getRect(); // enable collision
     std::vector<Laser> lasers;
 
 private:
