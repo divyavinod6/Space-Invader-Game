@@ -12,8 +12,10 @@ public:
     void MoveRight();
     void MoveLeft();
     void FireLaser();
+    void Reset();
     Rectangle getRect(); // enable collision
     std::vector<Laser> lasers;
+
 
 private:
     Texture2D image;

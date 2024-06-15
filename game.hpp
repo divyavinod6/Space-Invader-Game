@@ -8,8 +8,9 @@ public:
     Game();
     ~Game();
     void Draw();   // draw game objects
-    void Update();  // update positions of game objects
+    void Update();  // update positions of game objects, called at every frame
     void HandleInput();  // handling player's input
+    bool run; // false if game has stopped
 
 private:
     Spaceship spaceship;
@@ -29,4 +30,8 @@ private:
     float mysteryShipSpawnInterval;  // time at which mysteryship appears
     float timeLastSpawn; // time mysteryship was spawned
     void CheckForCollisions();  
+    int lives; // spaceship has 3 lives before game over
+    void GameOver();
+    void Reset();
+    void InitGame(); // initailise all variables to their initial values
 };

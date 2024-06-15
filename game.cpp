@@ -2,13 +2,7 @@
 #include <iostream>
 
 Game::Game() {
-    // Initialize spaceship or other game objects here
-    obstacles = CreateObstacles();  // holds 4 obstacle objects
-    aliens= CreateAliens();
-    aliensDirection=1;
-    timeLastAlienFired = 0.0;
-    timeLastSpawn  = 0.0;
-    mysteryShipSpawnInterval = GetRandomValue(10,20);
+    InitGame();
 }
 
 Game::~Game() {
@@ -45,14 +39,17 @@ void Game::Draw() {
 }
 
 void Game::HandleInput() {
-    if (IsKeyDown(KEY_RIGHT)) {
-        spaceship.MoveRight();
-    }
-    if (IsKeyDown(KEY_LEFT)) {
-        spaceship.MoveLeft();
-    }
-    if (IsKeyPressed(KEY_SPACE)) {
-        spaceship.FireLaser();
+    if(run){
+        if (IsKeyDown(KEY_RIGHT)) {
+            spaceship.MoveRight();
+        }
+        if (IsKeyDown(KEY_LEFT)) {
+            spaceship.MoveLeft();
+        }
+        if (IsKeyPressed(KEY_SPACE)) {
+            spaceship.FireLaser();
+        }
+
     }
 }
 
@@ -184,7 +181,11 @@ void Game::CheckForCollisions()
         if(CheckCollisionRecs(laser.getRect(),spaceship.getRect())){
             // deactivate laser and print on console to indicate life lost
             laser.active = false;
+            lives--;
             std::cout<< "Spaceship Hit!!" <<std::endl;
+            if(lives==0){
+                GameOver();
+            }
         }
 
         // loop through 4 obstacles to check collision with alien  laser
@@ -214,39 +215,77 @@ void Game::CheckForCollisions()
                 }
             }
         }
-        // if alien kills spaceship
+        // if alien collides with spaceship
         if(CheckCollisionRecs(alien.getRect(), spaceship.getRect())){
-            std::cout << "Spaceship hit by Alien" <<std::endl;
+            // std::cout << "Spaceship hit by Alien" <<std::endl;
+            GameOver();
         }
     }
 
 }
 
-void Game::Update() {
+void Game::GameOver()
+{
+    std::cout<<"Game Over" <<std::endl;
+    std::cout<<"Press Enter To Restart" <<std::endl;
+    run=false;
+}
 
-    // check if mysteryship event has occured
-    // call spawn method if interval has passed
-    double currentTime = GetTime();
-    if(currentTime -  timeLastSpawn > mysteryShipSpawnInterval){
-        mysteryship.Spawn();
-        timeLastSpawn = GetTime();
-        mysteryShipSpawnInterval = GetRandomValue(10,20);
-    }
+void Game::InitGame()
+{
+    // Initialize spaceship or other game objects here
+    obstacles = CreateObstacles();  // holds 4 obstacle objects
+    aliens= CreateAliens();
+    aliensDirection=1;
+    timeLastAlienFired = 0.0;
+    timeLastSpawn  = 0.0;
+    mysteryShipSpawnInterval = GetRandomValue(10,20);
+    lives=3;
+    run=true;
+}
 
-
-    for (auto& laser : spaceship.lasers) {
-        laser.Update();
-    }
-    MoveAliens();
-    AlienShootLaser(); //  created alien laser
-    // to move alien laser
-    for(auto& laser:alienLasers){
-        laser.Update();
-    }
-    DeleteInacticeLaser(); 
-    mysteryship.Update();
-    CheckForCollisions();
+void Game::Reset(){
+    spaceship.Reset(); // move spaceship sprite to center of screen
+    aliens.clear();  // delete all aliens from alien vector
+    alienLasers.clear(); // delete all lasers
+    obstacles.clear(); // clear obstacles from its vector
     
+}
+
+void Game::Update() {
+    // check if game not over and only update positions if game runs
+    if(run){
+        // check if mysteryship event has occured
+        // call spawn method if interval has passed
+        double currentTime = GetTime();
+        if(currentTime -  timeLastSpawn > mysteryShipSpawnInterval){
+            mysteryship.Spawn();
+            timeLastSpawn = GetTime();
+            mysteryShipSpawnInterval = GetRandomValue(10,20);
+        }
+
+
+        for (auto& laser : spaceship.lasers) {
+            laser.Update();
+        }
+        MoveAliens();
+        AlienShootLaser(); //  created alien laser
+        // to move alien laser
+        for(auto& laser:alienLasers){
+            laser.Update();
+        }
+        DeleteInacticeLaser(); 
+        mysteryship.Update();
+        CheckForCollisions();
+    }
+    else{
+        // game over, choice of game restart
+        if(IsKeyDown(KEY_ENTER)){
+            Reset();
+            InitGame();
+        }
+
+    }
 }
 
 std::vector<Obstacle> Game::CreateObstacles(){
