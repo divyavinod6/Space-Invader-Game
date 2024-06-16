@@ -3,12 +3,17 @@
 #include <fstream>
 
 Game::Game() {
+    music = LoadMusicStream("Sounds/music.ogg");
+    explosionSound = LoadSound("Sounds/explosion.ogg");
+    PlayMusicStream(music); // plays background music
     InitGame();
 }
 
 Game::~Game() {
     // Cleanup if needed
     Alien::UnloadImages();
+    UnloadMusicStream(music);
+    UnloadSound(explosionSound);
 }
 
 void Game::Draw() {
@@ -145,6 +150,7 @@ void Game::CheckForCollisions()
         while(it != aliens.end()){
             if(CheckCollisionRecs(it -> getRect(), laser.getRect())){
                 // collision happened
+                PlaySound(explosionSound);
 
                 if (it->type == 1){
                     score +=100;
@@ -180,13 +186,14 @@ void Game::CheckForCollisions()
             }
         }
 
-         // check collisions with mystery ship
-         if(CheckCollisionRecs(mysteryship.getRect(), laser.getRect())){
+        // check collisions with mystery ship
+        if(CheckCollisionRecs(mysteryship.getRect(), laser.getRect())){
             mysteryship.alive =false;
             laser.active = false;
             score += 500;
             CheckForHighScore();
-         }
+            PlaySound(explosionSound);
+        }
 
     }
 

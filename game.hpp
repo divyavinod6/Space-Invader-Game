@@ -14,7 +14,7 @@ public:
     int lives; // spaceship has 3 lives before game over
     int score;
     int highscore;
-
+    Music music;// background
 private:
     Spaceship spaceship;
     std::vector<Obstacle> CreateObstacles();
@@ -39,4 +39,5 @@ private:
     void CheckForHighScore();
     void SaveHighscoreToFile(int highscore);
     int loadHighscoreFromFile(); // reads text file and returns saved score 
+    Sound explosionSound;  // explosion sound
 };

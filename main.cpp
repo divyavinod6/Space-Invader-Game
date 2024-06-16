@@ -20,31 +20,34 @@ int main(){
     int windowHeight = 730;
 
     InitWindow(windowWidth + offset,windowHeight + offset, "C++ Space Invaders");
+    InitAudioDevice();  // sets music
+
+    Font font = LoadFontEx("Font/monogram.ttf",64,0,0);  // font loaded in memory
+    Texture2D spaceshipImage = LoadTexture("Graphics/spaceship.png");
+
     SetTargetFPS(60); // speed of the game 
 
     
-    Font font = LoadFontEx("Font/monogram.ttf",64,0,0);  // font loaded in memory
-    Texture2D spaceshipImage = LoadTexture("Graphics/spaceship.png");
-    // Spaceship Object Creation
-
     // Game Object Creation
     Game game;
-    Obstacle obstacle=Obstacle({100,100});
+    // Obstacle obstacle=Obstacle({100,100});
 
      
     while(WindowShouldClose()== false){
-
+        UpdateMusicStream(game.music);
         game.HandleInput();
         game.Update();
         BeginDrawing();
         ClearBackground(grey);
         DrawRectangleRoundedLines({10,10,760,760}, 0.18f,20,2,yellow); // rectangular frame
         DrawLineEx({16,730},{766,730},3, yellow); // draw horizontal line on screen
+        
         if(game.run){
             DrawTextEx(font, "LEVEL 01", {570,730},34,2,yellow);
         }else{
             DrawTextEx(font, "GAME OVER", {570,730},34 ,2, yellow);        
         }
+
         // Display lives left
         float x=50.0;
         for(int i=0;i< game.lives;i++){
@@ -61,12 +64,14 @@ int main(){
         DrawTextEx(font, "HIGH SCORE", {570,15}, 34,2, yellow);
         std::string highscoreText = FormatWithLeadingZeros(game.highscore,5);
         DrawTextEx(font, highscoreText.c_str(), {655,40},34,2,yellow);
+        
         // draw new image for spaceships
         game.Draw();
-    
+
         EndDrawing();
 
     }
 
     CloseWindow();
+    CloseAudioDevice();
 }
