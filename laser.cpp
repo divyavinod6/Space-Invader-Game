@@ -12,7 +12,7 @@ void Laser::Update() {
     // as laser only moves on the y axis so only alter y position of rectangle at every frame
     position.y += speed;
     if (active) {
-        if (position.y > GetScreenHeight() || position.y < 0) {
+        if (position.y > GetScreenHeight() - 100 || position.y < 25) {
             active = false;
         }
     }
