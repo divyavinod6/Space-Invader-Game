@@ -54,3 +54,7 @@ Debug by "Cltr+Shift+D" and click on Green button
 - Type 2 Alien: +200 points
 - Type 3 Alien: +300 points
 - Mystery Ship: +500 points
+
+## Screenshots
+!.[Type Screen](https://raw.githubusercontent.com/divyavinod6/Space-Invader-Game/main/Screenshots/output1.png)
+!.[MysteryShip](https://raw.githubusercontent.com/divyavinod6/Space-Invader-Game/main/Screenshots/output2.png)
