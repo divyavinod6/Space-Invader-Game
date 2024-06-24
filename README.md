@@ -42,3 +42,13 @@ To build and run this project, you need the following tools installed on your sy
 Download Code Zip file
 Build main.cpp by "Cltr+SHift+B"
 Debug by "Cltr+Shift+D" and click on Green button
+
+# ACTIONS
+
+-Press Space to shoot lasers
+-Left/Right arrow keys for lateral movement
+-Point system for hitting aliens
+-- For hitting Type 1 alien, +100 points
+-- For hitting Type 2 alien, +200 points
+-- For hitting Type 3 alien, +300 points
+-- For hitting Mystery ship, +500 points
