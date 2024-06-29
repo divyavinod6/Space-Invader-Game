@@ -50,6 +50,7 @@ Debug by "Cltr+Shift+D" and click on Green button
 
 # Point System
 
+
 - Type 1 Alien: +100 points
 - Type 2 Alien: +200 points
 - Type 3 Alien: +300 points
